@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("maven-publish")
 }
 
 android {
@@ -16,11 +17,10 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            consumerProguardFiles 'proguard-rules.pro'
+            consumerProguardFiles 'consumer-rules.pro'      
         }
     }
     compileOptions {
@@ -40,4 +40,19 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+}
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.github.Ajitshaw002'
+            artifactId = 'NetworkManager'
+            version = "1.1"
+            pom {
+                description = 'Custom Network Library'
+            }
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
 }
