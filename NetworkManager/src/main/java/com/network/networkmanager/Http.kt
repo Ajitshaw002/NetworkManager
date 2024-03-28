@@ -10,8 +10,12 @@ import java.nio.charset.StandardCharsets
 import java.nio.charset.StandardCharsets.UTF_8
 import java.util.*
 
-/* Http is the Builder design class which is used for
-* to handle all network related calls  */
+/* Http is the Builder design class which is used for to handle all network related calls
+* The Http object provides methods for making HTTP requests (GET, POST, DELETE, PUT).
+* The RequestCall class is used to configure the HTTP request, including the URL, request method, headers, and request body.
+* The makeRequest method initiates the HTTP request asynchronously using a separate thread.
+* The RequestTask class represents the task of making an HTTP request. It's responsible for opening a connection, sending the request, and handling the response.
+* The Response class encapsulates the response data and provides methods for converting it to a JSON object.*/
 
 object Http {
 
@@ -24,7 +28,8 @@ object Http {
         internal val header: MutableMap<String, String> = HashMap()
         internal var url: String? = null
         internal var body: ByteArray? = null
-        private var jsonObjReqListener: ResponseListener? = null
+         var response: JSONObject? =null
+        var jsonObjReqListener: ResponseListener? = null
         private var threadController: ThreadController = ThreadController()
 
         fun url(url: String?): RequestCall {
@@ -55,7 +60,11 @@ object Http {
             if (jsonObjReqListener != null) {
                 if (e != null) jsonObjReqListener?.onFailure(e)
                 else jsonObjReqListener?.onResponse(resp?.asJSONObject())
+                response = resp?.asJSONObject()
             }
+        }
+        internal fun getResponse(): JSONObject? {
+            return response
         }
     }
 

@@ -1,4 +1,4 @@
-package com.network.networkmanager
+package com.network.networkmanagers
 
 import org.junit.Test
 
