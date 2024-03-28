@@ -16,3 +16,17 @@ CUSTOM NETWORK LIBRARY
     dependencies {
 	        implementation 'com.github.Ajitshaw002:NetworkManager:1.1'
 	}
+
+
+SYNTEX 
+
+  Http.RequestCall(Http.GET)
+                .url(YOUR_URL)
+                .makeRequest(object : ResponseListener {
+                    override fun onResponse(res: JSONObject?) {
+                        //Add response code here
+                    }
+                    override fun onFailure(e: Exception?) {
+                        //Add failure code here
+                    }
+                })
